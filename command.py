@@ -1,4 +1,5 @@
 import os
+import shutil
 from datetime import datetime
 
 def clear_screen():
@@ -27,9 +28,25 @@ def execute_dir():
     for entry in entries:
         print(format_dir_entry(entry))
 
+def execute_copy(args):
+    if len(args) != 2:
+        print("Invalid number of arguments for COPY command")
+        return
+    src, dst = args
+    try:
+        shutil.copy(src, dst)
+        print(f"Copied {src} to {dst}")
+    except Exception as e:
+        print(f"Error copying file: {e}")
+
 def execute_command(command):
-    if command.lower() == "dir":
+    parts = command.split()
+    cmd = parts[0]
+    args = parts[1:]
+    if cmd.lower() == "dir":
         execute_dir()
+    elif cmd.lower() == "copy":
+        execute_copy(args)
     else:
         os.system(command)
 
