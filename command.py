@@ -1,6 +1,9 @@
 import os
 from datetime import datetime
 
+def clear_screen():
+    os.system("cls" if os.name == "nt" else "clear")
+
 def format_file_size(size):
     if size < 1024:
         return f"{size} bytes"
@@ -31,6 +34,7 @@ def execute_command(command):
         os.system(command)
 
 def main():
+    clear_screen()
     print("Microsoft Windows 98 [Version 4.10.1998]")
     print("(c)Copyright Microsoft Corp 1981-1999.")
     print()
