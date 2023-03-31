@@ -23,10 +23,20 @@ def format_dir_entry(entry):
     else:
         return f"{entry.name:<25}    <DIR>"
 
-def execute_dir():
+def execute_dir(args):
+    wide = False
+    if len(args) == 1 and args[0].lower() == "/w":
+        wide = True
     entries = sorted(os.scandir(), key=lambda e: (e.is_file(), e.name))
-    for entry in entries:
-        print(format_dir_entry(entry))
+    if wide:
+        for i, entry in enumerate(entries):
+            print(f"{entry.name:<14}", end="")
+            if (i + 1) % 5 == 0:
+                print()
+        print()
+    else:
+        for entry in entries:
+            print(format_dir_entry(entry))
 
 def execute_copy(args):
     if len(args) != 2:
@@ -44,7 +54,7 @@ def execute_command(command):
     cmd = parts[0]
     args = parts[1:]
     if cmd.lower() == "dir":
-        execute_dir()
+        execute_dir(args)
     elif cmd.lower() == "copy":
         execute_copy(args)
     else:
