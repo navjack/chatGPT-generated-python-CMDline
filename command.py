@@ -29,8 +29,9 @@ def execute_dir(args):
         wide = True
     entries = sorted(os.scandir(), key=lambda e: (e.is_file(), e.name))
     if wide:
+        max_name_len = max(len(e.name) for e in entries)
         for i, entry in enumerate(entries):
-            print(f"{entry.name:<14}", end="")
+            print(f"{entry.name:<{max_name_len + 2}}", end="")
             if (i + 1) % 5 == 0:
                 print()
         print()
